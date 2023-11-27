@@ -92,7 +92,7 @@ fi
 JAR_PATH="build/libs/raspberrypimicronautspike-$RELEASE_VERSION-all-optimized.jar"
 
 echo "Building jar"
-./gradlew clean build
+MICRONAUT_ENVIRONMENTS=raspberrypi ./gradlew clean build
 JAR_SHA1SUM=$(sha1sum $JAR_PATH | cut -f 1 -d " ")
 
 echo "Creating github release $RELEASE_VERSION"
