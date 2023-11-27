@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Add Author</title>
+    </head>
+    <body>
+        <section>
+            <h1>Add Author</h1>
+            <form action="#" th:action="@{/authors/add}" method="post">
+                <div th:replace="~{authors/author-fields :: author-fields(${authorRequest}, ${fieldErrors})}"></div>
+                <input type="submit" value="Add author" />
+            </form>
+        </section>
+    </body>
+</html>

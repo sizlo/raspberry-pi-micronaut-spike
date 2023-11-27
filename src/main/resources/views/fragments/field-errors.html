@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div th:fragment="field-errors(fieldName, fieldErrors)">
+            <div th:if="${fieldErrors != null && fieldErrors.containsKey(fieldName)}">
+                <div th:each="error : ${fieldErrors[fieldName]}" th:text="${error}"></div>
+            </div>
+        </div>
+    </body>
+</html>

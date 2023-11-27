@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <div th:fragment="author-fields(authorRequest, fieldErrors)">
+            <div>
+                <label for="firstName">First name</label>
+                <input type="text" name="firstName" id="firstName" th:value="${authorRequest.firstName}" />
+                <div th:replace="~{fragments/field-errors :: field-errors('firstName', ${fieldErrors})}"></div>
+            </div>
+            <div>
+                <label for="lastName">Last name</label>
+                <input type="text" name="lastName" id="lastName" th:value="${authorRequest.lastName}" />
+                <div th:replace="~{fragments/field-errors :: field-errors('lastName', ${fieldErrors})}"></div>
+            </div>
+        </div>
+    </body>
+</html>
