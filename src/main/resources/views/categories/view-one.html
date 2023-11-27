@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(
+    title = 'Category',
+    content = ~{::section}
+)}" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <section>
+            <h1>Books in <span th:text="${category}"></span></h1>
+            <p th:if="${books.isEmpty()}">No books in this category</p>
+            <table th:if="${!books.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.author.name}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </body>
+</html>

@@ -6,7 +6,10 @@
     <body>
         <section>
             <h1>Home</h1>
-            <p th:text="${message}"></p>
+            <h2>Categories</h2>
+            <div th:each="category : ${categories}">
+                <a th:href="@{/categories/{c}(c = ${category})}" th:text="${category}"></a>
+            </div>
         </section>
     </body>
 </html>
