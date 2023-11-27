@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: raspberrypimicronautspike
+  router:
+    static-resources:
+      default:
+        paths: classpath:static
