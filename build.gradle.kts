@@ -64,3 +64,12 @@ micronaut {
     }
 }
 
+// Replace the token `${version}` in application.yml
+// with the version string defined in this file
+tasks.processResources {
+    filesMatching("**/application.yml") {
+        filter { line ->
+            line.replace("\${version}", "$version")
+        }
+    }
+}

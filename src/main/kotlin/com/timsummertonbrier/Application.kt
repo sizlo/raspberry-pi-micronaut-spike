@@ -1,7 +1,11 @@
 package com.timsummertonbrier
 
-import io.micronaut.runtime.Micronaut.run
+import io.micronaut.runtime.Micronaut
+
 fun main(args: Array<String>) {
-	run(*args)
+	Micronaut
+		.build(*args)
+		.defaultEnvironments("default")
+		.start()
 }
 

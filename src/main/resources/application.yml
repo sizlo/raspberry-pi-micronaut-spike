@@ -5,3 +5,6 @@ micronaut:
     static-resources:
       default:
         paths: classpath:static
+
+app:
+  version: ${version}
