@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <link th:href="@{/books.css}" rel="stylesheet" />
-        <title>Books</title>
-    </head>
+<html lang="en" th:replace="~{layout :: layout(
+    title = 'Books',
+    content = ~{::section},
+    cssFile = @{/books.css}
+)}" xmlns:th="http://www.thymeleaf.org">
     <body>
         <section>
             <h1>Books</h1>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{layout :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Add Author</title>
-    </head>
+<html lang="en" th:replace="~{layout :: layout(
+    title = 'Add author',
+    content = ~{::section}
+)}" xmlns:th="http://www.thymeleaf.org">
     <body>
         <section>
             <h1>Add Author</h1>

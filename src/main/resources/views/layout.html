@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title th:replace="${title}">Layout Title</title>
+        <title th:text="|${title} - RPI Micronaut Spike|"></title>
+        <link th:href="@{/global.css}" rel="stylesheet" />
+        <link th:if="${cssFile}" th:href="${cssFile}" rel="stylesheet" />
     </head>
     <body>
         <div class="header">
