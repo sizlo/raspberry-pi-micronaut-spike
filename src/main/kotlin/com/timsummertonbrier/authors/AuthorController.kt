@@ -38,7 +38,6 @@ data class AuthorRequest(
     }
 }
 
-// TODO - Configure allopen plugin
 @Controller("/authors")
 open class AuthorController(private val authorRepository: AuthorRepository) {
 
