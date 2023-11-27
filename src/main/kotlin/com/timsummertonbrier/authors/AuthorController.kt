@@ -81,26 +81,30 @@ open class AuthorController(private val authorRepository: AuthorRepository) {
         return HttpResponse.seeOther(URI.create("/authors"))
     }
 
-//    /**
-//     * We need to include the authorRequest object as a model attribute so the current state of the edit form
-//     * is preserved if the delete fails.
-//     * A better implementation would be to have a view author page, which is separate from the edit author page.
-//     * The form would be on the edit page, the delete button on the view page.
-//     */
-//    @DeleteMapping("/delete/{id}")
-//    fun deleteAuthor(@PathVariable("id") id: Int, authorRequest: AuthorRequest, model: Model): String {
-//        try {
-//            authorRepository.deleteAuthor(id)
-//        } catch (e: ExposedSQLException) {
-//            if (e.sqlState == PSQLState.FOREIGN_KEY_VIOLATION.state) {
-//                model.addAttribute("error", "Could not delete author as they still have books")
-//                return "authors/edit"
-//            } else {
-//                throw e
-//            }
-//        }
-//        return "redirect:/authors"
-//    }
+    /**
+     * We need to include the authorRequest object as a model attribute so the current state of the edit form
+     * is preserved if the delete fails.
+     * A better implementation would be to have a view author page, which is separate from the edit author page.
+     * The form would be on the edit page, the delete button on the view page.
+     */
+    @Post("/delete/{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    fun deleteAuthor(@PathVariable("id") id: Int, @Body authorRequest: AuthorRequest): HttpResponse<Any> {
+        try {
+            authorRepository.deleteAuthor(id)
+        } catch (e: BooksStillExistForAuthorException) {
+            val body = ModelAndView(
+                "authors/edit",
+                mapOf(
+                    "error" to "Could not delete author as they still have books",
+                    "authorRequest" to authorRequest,
+                    "id" to id,
+                )
+            )
+            return HttpResponse.badRequest(body)
+        }
+        return HttpResponse.seeOther(URI.create("/authors"))
+    }
 
     @Error
     fun onValidationError(request: HttpRequest<Any>, exception: ConstraintViolationException): HttpResponse<Any> {

@@ -18,7 +18,7 @@
             This means we need to include the authorRequest object on the delete form, and the form needs to contain
             all the relevant input fields. We can place the input fields inside a hidden div.
             -->
-            <form action="#" th:action="@{/authors/delete/{id}(id = ${id})}" th:method="delete">
+            <form action="#" th:action="@{/authors/delete/{id}(id = ${id})}" method="post">
                 <div style="display: none">
                     <div th:replace="~{authors/author-fields :: author-fields(${authorRequest}, ${fieldErrors})}"></div>
                 </div>

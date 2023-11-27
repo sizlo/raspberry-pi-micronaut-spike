@@ -1,11 +1,12 @@
 package com.timsummertonbrier.authors
 
+import com.timsummertonbrier.books.books
 import jakarta.inject.Singleton
+
+val authors = mutableMapOf<Int, Author>()
 
 @Singleton
 class AuthorRepository {
-
-    private val authors = mutableMapOf<Int, Author>()
 
     fun getAllAuthors(): List<Author> {
         return authors.values.toList()
@@ -24,6 +25,9 @@ class AuthorRepository {
     }
 
     fun deleteAuthor(id: Int) {
+        if (books.any { it.value.author.id == id }) {
+            throw BooksStillExistForAuthorException()
+        }
         authors.remove(id)
     }
 
@@ -31,3 +35,5 @@ class AuthorRepository {
         return Author(id, firstName!!, lastName!!)
     }
 }
+
+class BooksStillExistForAuthorException : RuntimeException()

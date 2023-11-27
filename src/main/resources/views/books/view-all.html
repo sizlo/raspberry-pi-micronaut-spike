@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link th:href="@{/books.css}" rel="stylesheet" />
+        <title>Books</title>
+    </head>
+    <body>
+        <section>
+            <h1>Books</h1>
+            <p th:if="${books.isEmpty()}">No books yet</p>
+            <table th:if="${!books.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="book : ${books}">
+                        <td th:text="${book.title}"></td>
+                        <td th:text="${book.category}"></td>
+                        <td th:text="${book.author.name}"></td>
+                        <td><a th:href="@{/books/edit/{id}(id = ${book.id})}">Edit</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/books/add">Add a book</a>
+        </section>
+    </body>
+</html>

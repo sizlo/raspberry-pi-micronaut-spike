@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{layout :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Edit Book</title>
+    </head>
+    <body>
+        <section>
+            <h1>Edit Book</h1>
+            <form action="#" th:action="@{/books/update/{id}(id = ${id})}" method="post">
+                <div th:replace="~{books/book-fields :: book-fields(${bookRequest}, ${fieldErrors})}"></div>
+                <input type="submit" value="Update book" />
+            </form>
+            <form action="#" th:action="@{/books/delete/{id}(id = ${id})}" method="post">
+                <div th:replace="~{fragments/delete-button :: delete-button}"></div>
+            </form>
+        </section>
+    </body>
+</html>
