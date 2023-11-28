@@ -10,7 +10,9 @@ plugins {
 version = "0.0.3-SNAPSHOT"
 group = "com.timsummertonbrier"
 
-val kotlinVersion=project.properties.get("kotlinVersion")
+val kotlinVersion: String by project
+val exposedVersion: String by project
+
 repositories {
     mavenCentral()
 }
@@ -29,14 +31,17 @@ dependencies {
     implementation("io.micronaut.flyway:micronaut-flyway")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("jakarta.validation:jakarta.validation-api")
+    implementation("org.postgresql:postgresql")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
     runtimeOnly("org.yaml:snakeyaml")
-    runtimeOnly("org.postgresql:postgresql")
     testImplementation("io.micronaut:micronaut-http-client")
+
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
 }
 
 

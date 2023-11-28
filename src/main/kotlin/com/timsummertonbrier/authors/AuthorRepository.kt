@@ -1,39 +1,50 @@
 package com.timsummertonbrier.authors
 
-import com.timsummertonbrier.books.books
+import com.timsummertonbrier.database.ExposedTransactional
 import jakarta.inject.Singleton
+import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.statements.UpdateBuilder
 
-val authors = mutableMapOf<Int, Author>()
+object Authors : IntIdTable("author") {
+    var firstName = text("first_name")
+    var lastName = text("last_name")
 
-@Singleton
-class AuthorRepository {
-
-    fun getAllAuthors(): List<Author> {
-        return authors.values.toList()
-    }
-
-    fun getAuthor(id: Int): Author {
-        return authors[id]!!
-    }
-
-    fun addAuthor(authorRequest: AuthorRequest) {
-        authors[authors.size] = authorRequest.toAuthor(authors.size)
-    }
-
-    fun updateAuthor(id: Int, authorRequest: AuthorRequest) {
-        authors[id] = authorRequest.toAuthor(id)
-    }
-
-    fun deleteAuthor(id: Int) {
-        if (books.any { it.value.author.id == id }) {
-            throw BooksStillExistForAuthorException()
-        }
-        authors.remove(id)
-    }
-
-    private fun AuthorRequest.toAuthor(id: Int): Author {
-        return Author(id, firstName!!, lastName!!)
+    fun UpdateBuilder<Int>.populateFrom(authorRequest: AuthorRequest) {
+        this[firstName] = authorRequest.firstName!!
+        this[lastName] = authorRequest.lastName!!
     }
 }
 
-class BooksStillExistForAuthorException : RuntimeException()
+fun ResultRow.toAuthor(): Author {
+    return Author(
+        this[Authors.id].value,
+        this[Authors.firstName],
+        this[Authors.lastName]
+    )
+}
+
+@Singleton
+@ExposedTransactional
+class AuthorRepository {
+    fun getAllAuthors(): List<Author> {
+        return Authors.selectAll().map { it.toAuthor() }
+    }
+
+    fun getAuthor(id: Int): Author {
+        return Authors.select { Authors.id eq id }.map { it.toAuthor() }.first()
+    }
+
+    fun addAuthor(authorRequest: AuthorRequest) {
+        Authors.insert { it.populateFrom(authorRequest) }
+    }
+
+    fun updateAuthor(id: Int, authorRequest: AuthorRequest) {
+        Authors.update({ Authors.id eq id }) { it.populateFrom(authorRequest) }
+    }
+
+    fun deleteAuthor(id: Int) {
+        Authors.deleteWhere { Authors.id eq id }
+    }
+}

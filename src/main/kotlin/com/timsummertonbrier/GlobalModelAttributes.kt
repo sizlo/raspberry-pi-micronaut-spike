@@ -10,11 +10,18 @@ import jakarta.inject.Singleton
 class GlobalModelAttributes (
     @Value("\${app.version}") private val appVersion: String,
     @Value("\${app.environment}") private val appEnvironment: String,
+    @Value("\${datasources.default.url}") private val jdbcUrl: String,
 ) : ViewModelProcessor<Map<String, Any>> {
 
     override fun process(request: HttpRequest<*>, modelAndView: ModelAndView<Map<String, Any>>) {
+        val databaseEnvironment = when {
+            jdbcUrl.contains("localhost") -> "local"
+            jdbcUrl.contains("_dev") -> "dev"
+            else -> "prod"
+        }
+
         modelAndView.addToModel(mapOf(
-            "buildInfo" to "$appVersion - running on: $appEnvironment - database: in memory maps"
+            "buildInfo" to "$appVersion - running on: $appEnvironment - database: $databaseEnvironment"
         ))
     }
 

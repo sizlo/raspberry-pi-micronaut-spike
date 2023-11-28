@@ -10,6 +10,8 @@ import io.micronaut.views.View
 import jakarta.validation.ConstraintViolationException
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
+import org.jetbrains.exposed.exceptions.ExposedSQLException
+import org.postgresql.util.PSQLState
 import java.net.URI
 
 data class Author(
@@ -91,16 +93,20 @@ open class AuthorController(private val authorRepository: AuthorRepository) {
     fun deleteAuthor(@PathVariable("id") id: Int, @Body authorRequest: AuthorRequest): HttpResponse<Any> {
         try {
             authorRepository.deleteAuthor(id)
-        } catch (e: BooksStillExistForAuthorException) {
-            val body = ModelAndView(
-                "authors/edit",
-                mapOf(
-                    "error" to "Could not delete author as they still have books",
-                    "authorRequest" to authorRequest,
-                    "id" to id,
+        } catch (e: ExposedSQLException) {
+            if (e.sqlState == PSQLState.FOREIGN_KEY_VIOLATION.state) {
+                val body = ModelAndView(
+                    "authors/edit",
+                    mapOf(
+                        "error" to "Could not delete author as they still have books",
+                        "authorRequest" to authorRequest,
+                        "id" to id,
+                    )
                 )
-            )
-            return HttpResponse.badRequest(body)
+                return HttpResponse.badRequest(body)
+            } else {
+                throw e
+            }
         }
         return HttpResponse.seeOther(URI.create("/authors"))
     }

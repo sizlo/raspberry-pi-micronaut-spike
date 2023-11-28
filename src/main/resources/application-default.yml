@@ -17,4 +17,8 @@ datasources:
     username: ${DATASOURCES_DEFAULT_USERNAME:local-user}
     password: ${DATASOURCES_DEFAULT_PASSWORD:local-password}
 
+logger:
+  levels:
+    Exposed: DEBUG
+
 DATASOURCES_DEFAULT_URL: jdbc:postgresql://localhost:5432/raspberry_pi_micronaut_spike
