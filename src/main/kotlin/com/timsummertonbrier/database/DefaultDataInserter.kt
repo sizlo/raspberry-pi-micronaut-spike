@@ -28,7 +28,7 @@ class DevDefaultDataInserter(
         val stephenKingId = authorRepository.addAuthor(AuthorRequest("Stephen", "King"))
         val darrenShanId = authorRepository.addAuthor(AuthorRequest("Darren", "Shan"))
 
-        listOf(
+        bookRepository.addBooks(listOf(
             BookRequest("Fellowship of the Ring", "Fantasy", jrrTolkeinId),
             BookRequest("The Two Towers", "Fantasy", jrrTolkeinId),
             BookRequest("Return of the King", "Fantasy", jrrTolkeinId),
@@ -63,7 +63,7 @@ class DevDefaultDataInserter(
             BookRequest("Wolf Island", "Horror", darrenShanId),
             BookRequest("Dark Calling", "Horror", darrenShanId),
             BookRequest("Hells Heroes", "Horror", darrenShanId),
-        ).forEach { bookRepository.addBook(it) }
+        ))
     }
 }
 

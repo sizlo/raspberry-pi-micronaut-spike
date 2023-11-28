@@ -15,7 +15,7 @@ annotation class ExposedTransactional
 @Singleton
 @InterceptorBean(ExposedTransactional::class)
 class ExposedTransactionalInterceptor : MethodInterceptor<Any, Any> {
-    override fun intercept(context: MethodInvocationContext<Any, Any>): Any {
+    override fun intercept(context: MethodInvocationContext<Any, Any>): Any? {
         return transaction {
             context.proceed()
         }

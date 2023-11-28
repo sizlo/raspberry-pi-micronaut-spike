@@ -2,6 +2,7 @@ package com.timsummertonbrier.books
 
 import com.timsummertonbrier.authors.Author
 import com.timsummertonbrier.authors.Authors
+import com.timsummertonbrier.books.Books.populateFrom
 import com.timsummertonbrier.database.ExposedTransactional
 import jakarta.inject.Singleton
 import org.jetbrains.exposed.dao.id.IntIdTable
@@ -47,6 +48,12 @@ class BookRepository {
 
     fun addBook(bookRequest: BookRequest) : Int {
         return Books.insertAndGetId { it.populateFrom(bookRequest) }.value
+    }
+
+    fun addBooks(bookRequests: List<BookRequest>) {
+        Books.batchInsert(bookRequests) { bookRequest ->
+            this.populateFrom(bookRequest)
+        }
     }
 
     fun updateBook(id: Int, bookRequest: BookRequest) {
