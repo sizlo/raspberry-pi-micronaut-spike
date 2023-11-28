@@ -19,6 +19,7 @@ class ExposedConfig(
 ) {
 
     @EventListener
+    @Suppress("UNUSED_PARAMETER")
     fun connectToDatabase(event: StartupEvent) {
         Database.connect(
             (datasource as DelegatingDataSource).targetDataSource
