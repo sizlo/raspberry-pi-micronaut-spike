@@ -9,7 +9,7 @@ datasources:
     # url: ${DATASOURCES_DEFAULT_URL:jdbc:postgresql://localhost:5432/raspberry_pi_micronaut_spike}
     # if the environment variable is not set the value which gets used is:
     # 5432/raspberry_pi_micronaut_spike
-    # aka, the string after the final comma in the line.
+    # aka, the string after the final colon in the line.
     # Workaround this by setting a DATASOURCES_DEFAULT_URL property below.
     # If the environment variable is set this has precedence, so we can still override
     # the database url via envars
