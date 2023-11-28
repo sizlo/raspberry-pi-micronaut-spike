@@ -14,7 +14,8 @@ import javax.sql.DataSource
  */
 @Singleton
 open class ExposedConfig(
-    private val datasource: DataSource
+    private val datasource: DataSource,
+    private val defaultDataInserter: DefaultDataInserter,
 ) {
 
     @EventListener
@@ -22,5 +23,6 @@ open class ExposedConfig(
         Database.connect(
             (datasource as DelegatingDataSource).targetDataSource
         )
+        defaultDataInserter.insertDefaultData()
     }
 }

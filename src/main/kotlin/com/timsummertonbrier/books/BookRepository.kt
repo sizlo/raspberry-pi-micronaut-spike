@@ -45,8 +45,8 @@ class BookRepository {
         return (Books innerJoin Authors).select { Books.id eq id }.map { it.toBook() }.first()
     }
 
-    fun addBook(bookRequest: BookRequest) {
-        Books.insert { it.populateFrom(bookRequest) }
+    fun addBook(bookRequest: BookRequest) : Int {
+        return Books.insertAndGetId { it.populateFrom(bookRequest) }.value
     }
 
     fun updateBook(id: Int, bookRequest: BookRequest) {

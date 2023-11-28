@@ -36,8 +36,8 @@ class AuthorRepository {
         return Authors.select { Authors.id eq id }.map { it.toAuthor() }.first()
     }
 
-    fun addAuthor(authorRequest: AuthorRequest) {
-        Authors.insert { it.populateFrom(authorRequest) }
+    fun addAuthor(authorRequest: AuthorRequest): Int {
+        return Authors.insertAndGetId { it.populateFrom(authorRequest) }.value
     }
 
     fun updateAuthor(id: Int, authorRequest: AuthorRequest) {
