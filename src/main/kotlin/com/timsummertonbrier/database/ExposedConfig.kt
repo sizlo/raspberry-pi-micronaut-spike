@@ -13,13 +13,13 @@ import javax.sql.DataSource
  * correct object to our Database
  */
 @Singleton
-open class ExposedConfig(
+class ExposedConfig(
     private val datasource: DataSource,
     private val defaultDataInserter: DefaultDataInserter,
 ) {
 
     @EventListener
-    open fun connectToDatabase(event: StartupEvent) {
+    fun connectToDatabase(event: StartupEvent) {
         Database.connect(
             (datasource as DelegatingDataSource).targetDataSource
         )
