@@ -59,7 +59,7 @@ There is a deploy script to install java if required, download the jar of the la
 
 You can view deployment logs in `$HOME/raspberry-pi-micronaut-spike/deploy_<datetime>.log`. Logs for latest 5 deployments are kept.
 
-You can view app logs in `$HOME/raspberry-pi-micronaut-spike/app.log`. App logs are rotated daily, previous days are archived in `$HOME/raspberry-pi-micronaut-spike/app.<date>.log.gz`. The latest 50 app log archives are kept.
+You can view app logs in `$HOME/raspberry-pi-micronaut-spike/app.log`. App logs are rotated daily, previous days are archived in `$HOME/raspberry-pi-micronaut-spike/app.log.<date>.gz`. The latest 50 app log archives are kept.
 
 ## Caveats
 The only Java 17 jdk compatible with a Raspberry Pi 1 Model B+ (2014) I could find is from [here](https://github.com/JsBergbau/OpenJDK-Raspberry-Pi-Zero-W-armv6). A mirror of this jdk is stored in this repository, the deploy script will download this jdk if required.
