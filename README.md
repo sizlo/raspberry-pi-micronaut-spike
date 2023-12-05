@@ -74,4 +74,4 @@ The limit of 5 connections has been annoying. When restarting the Raspberry Pi t
 If Clever Cloud ever discontinue their free tier consider migrating to MongoDb, who advertise as "Free forever". This will require rewriting the repository layer, as Exposed does not support MongoDB.
 
 ## Performance
-TODO
+App startup time on a Raspberry Pi 1 Model B+ (2014) is slow, just over 1 minute. Responding to the first request after startup is also slow, around 30 seconds. After this performance is usable, but there is noticeable latency. Each request takes ~1 second to execute.
